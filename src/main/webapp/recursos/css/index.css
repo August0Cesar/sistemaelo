@@ -1,0 +1,32 @@
+@CHARSET "ISO-8859-1";
+.main {
+	float: left;
+}
+css
+@CHARSET "ISO-8859-1";
+body{
+	
+}
+.principal{
+	width:600px;
+	height:100%;
+	
+}
+
+.grey {
+	color: #999999;
+}
+
+.image-perfil {
+	padding-top: 20px;
+	
+}
+
+.col-xs-12 {
+	height: 400px;;
+}
+
+
+h1 {
+	font-size: 32px;
+}
