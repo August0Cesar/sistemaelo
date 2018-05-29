@@ -245,6 +245,11 @@
 										Discipulador
 									</label>
 								</div>
+								<div class="radio">
+									<label> <input type="checkbox" name="cargos" value="6" />
+										Anfitrião
+									</label>
+								</div>
 							</div>
 						</div>
 

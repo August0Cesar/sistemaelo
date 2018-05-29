@@ -24,8 +24,9 @@ $(document).ready(function() {
 	        //função each para pegar os selecionados
 	        checkbox.each(function(){
 	            val.push($(this).val());
-	            
 	        });
+	     }else{
+	    	 val = [];
 	     }
 	    obj.cargo = val;
 		

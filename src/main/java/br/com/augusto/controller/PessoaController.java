@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mchange.v2.lang.StringUtils;
+
 import br.com.augusto.controller.entidade.Batismo;
 import br.com.augusto.controller.entidade.Cargo;
 import br.com.augusto.controller.entidade.ChegadaIgreja;
@@ -38,6 +40,7 @@ import br.com.augusto.dao.jpa.JPATrilhoLideranca;
 import br.com.augusto.dto.MembroDTO;
 import br.com.augusto.excell.MembrosExcell;
 import br.com.augusto.tools.ToolsDate;
+import ch.qos.logback.classic.Logger;
 
 @Transactional
 @Controller
@@ -77,17 +80,12 @@ public class PessoaController {
 	@RequestMapping(value = "/salvaPessoa", method = RequestMethod.POST,produces = "application/json")
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody String salvaPessoa(@RequestBody MembroDTO membro) {
-//		System.out.println(membro.getBatizadoPor()+membro.getNome()+membro.getCasado());
-//		System.out.println(membro.getDataNascimento()+membro.getNaturalidade()+membro.getChegadaIgreja());
-//		System.out.println("**********");
 		String[] teste = membro.getCargo();
-//		System.out.println(membro.getCargo());
-//		System.out.println("**********");
+		
 		Pessoa p = new Pessoa();
 		Batismo batismo = new Batismo();
 		Telefones tel = new Telefones();
 		
-		//batismo
 		if(membro.getBatizadoPor().equals("")||membro.getBatizadoPor() == null){
 			batismo.setBatizado_por("nao sabe");
 			batismo.setStatus_batismo(true);
@@ -178,25 +176,34 @@ public class PessoaController {
 			try {
 				p.setData_nascimento(ToolsDate.stringForDate(membro.getDataNascimento()));
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.getMessage();
 			}
 		}
 		p.setData_cadastro(Calendar.getInstance().getTime());
 		
 		int id_cargo = 1;
-		List<Cargo> cargosList = new ArrayList<Cargo>();
-		for(int i=0;i<teste.length;i++){
-			Cargo car = new Cargo();
-			car.setId_cargo(id_cargo);
-			cargosList.add(car);
-			id_cargo ++;
-		}
-		p.setCargo(cargosList);
 		p.setMembro(true);
-		daoPessoa.persistir(p);
-		//Pessoa pessoa = daoPessoa.encontraPessoa(p);
-		System.out.print(p.getId_pessoa());
+		if(!org.springframework.util.StringUtils.isEmpty(teste)) {
+			List<Cargo> cargosList = new ArrayList<Cargo>();
+			for(int i=0;i<teste.length;i++){
+				Cargo car = new Cargo();
+				System.out.println(teste[i]);
+				car.setId_cargo(Integer.parseInt(teste[i]));
+				cargosList.add(car);
+				id_cargo ++;
+			}
+			p.setCargo(cargosList);
+			
+		}else {
+			p.setCargo(null);
+		}
+		try {
+			daoPessoa.persistir(p);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		
 		for (int i = 1; i <= 19; i++) {
 			ListTrilho trilho = new ListTrilho();
 			TrilhoLideranca tr = new TrilhoLideranca();
@@ -206,7 +213,6 @@ public class PessoaController {
 			trilho.setTrilhoLideranca(tr);
 			trilho.setData_cadastro(Calendar.getInstance().getTime());
 			daoListTrilho.persistir(trilho);
-			//id_trilho =id_trilho + 0;
 		}
 		
 		return "ok";
