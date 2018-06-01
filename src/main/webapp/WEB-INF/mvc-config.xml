@@ -43,7 +43,7 @@
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="user" value="root" />
 		<property name="password" value="46591234" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/sistemaelo" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/sistemaelo?useSSL=false" />
 		<property name="maxPoolSize" value="10" />
 		<property name="acquireIncrement" value="1" />
 		<property name="maxIdleTime" value="120" />

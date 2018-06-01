@@ -187,7 +187,6 @@ public class PessoaController {
 			List<Cargo> cargosList = new ArrayList<Cargo>();
 			for(int i=0;i<teste.length;i++){
 				Cargo car = new Cargo();
-				System.out.println(teste[i]);
 				car.setId_cargo(Integer.parseInt(teste[i]));
 				cargosList.add(car);
 				id_cargo ++;
@@ -329,7 +328,6 @@ public class PessoaController {
 
 	@RequestMapping("/todosMembros")
 	public String todosMembros(Model model) {
-		System.out.println("passando no Controller ListaPessoas");
 		pessoas = daoPessoa.todosmenbros();
 		model.addAttribute("pessoas", pessoas);
 		return "pessoa/listaMembros";
@@ -337,7 +335,6 @@ public class PessoaController {
 
 	@RequestMapping("/nomeMembros")
 	public String nomeMembros(Model model) {
-		System.out.println("passando no Controller ListaPessoas");
 		pessoas = daoPessoa.nomeMenbros();
 		model.addAttribute("pessoas", pessoas);
 		return "pessoa/listaMembros";
@@ -345,7 +342,6 @@ public class PessoaController {
 
 	@RequestMapping("/todosVisitantes")
 	public String todosVisitantes(Model model) {
-		System.out.println("passando no Controller ListaPessoas");
 		pessoas = daoPessoa.todosVisitantes();
 		model.addAttribute("pessoas", pessoas);
 		return "pessoa/listaVisitantes";
@@ -393,18 +389,12 @@ public class PessoaController {
 	public String buscaTeste() {
 		Pessoa p = new Pessoa();
 		p = daoPessoa.get(3);
-		System.out.print(p.getCargo().get(0).getNome_cargo());
-
-		/*
-		 * Cargo c = new Cargo(); c.setId_cargo(1); List<Cargo>cargos = new
-		 * ArrayList<Cargo>(); cargos.add(c); p.setCargo(cargos);
-		 * daoPessoa.persistir(p); System.out.print(p.getNome_pessoa());
-		 */ return "succes";
+		return "succes";
 	}
 
 	@RequestMapping(value = "/detalhesMembros", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public @ResponseBody String detalhesMembros(@RequestBody Integer id) {
+	public @ResponseBody String detalhesMembros(@RequestBody Integer id) {//detalhes dos membros
 		System.out.println(id);
 		// Integer ids = Integer.parseInt(id);
 		Pessoa p = daoPessoa.get(id);
@@ -463,15 +453,8 @@ public class PessoaController {
 	// retorna a lista de aniversariantes do mês
 	@RequestMapping(value = "/listaAniversariantes", method = RequestMethod.POST)
 	public String listaAniversariantes(int numberMes, Model model) {
-		System.out.println("1º" + numberMes);
 		List<Pessoa> pessoas = new ArrayList<Pessoa>();
 		pessoas = daoPessoa.buscaAniversariantes(numberMes);
-		/*
-		 * Select * From aniversariantes Where Month(dt_nascimento) =
-		 * Month(Now()); select nome_pessoa from pessoa Where
-		 * Month(data_nascimento) = 12;
-		 * 
-		 */
 		model.addAttribute("pessoas", pessoas);
 		return "pessoa/listaAniversario";
 	}

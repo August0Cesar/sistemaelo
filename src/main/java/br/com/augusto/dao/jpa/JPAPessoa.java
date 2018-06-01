@@ -110,7 +110,6 @@ public class JPAPessoa extends JPADAO<Pessoa> implements DAOPessoa {
 	}
 
 	public List<Pessoa> buscaAniversariantes(int numberMes) {
-		System.out.println("2º" + numberMes);
 		String consulta = "select p from Pessoa p where Month(p.data_nascimento) = :mes";
 		TypedQuery<Pessoa> query = manager.createQuery(consulta, Pessoa.class);
 		query.setParameter("mes", numberMes);

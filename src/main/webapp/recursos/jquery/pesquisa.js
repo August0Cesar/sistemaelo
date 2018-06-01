@@ -13,8 +13,15 @@ $(document).ready(function() {
 	{
 	   return value.getMonth()+1 + "/" + value.getDate() + "/" + value.getYear();
 	}
-	// funcao de busca detalhes de Membros no banco
-	function buscaDetalhesMembros(id) {
+	
+	$(".det").click(function() {
+		var campo = $(this);
+		var pai = $(this).parent();
+		var id = pai.find("td[class=ident]").text();
+		buscaDetalhesMembros(id);
+	});
+	
+	function buscaDetalhesMembros(id) {// funcao de busca detalhes de Membros no banco
 		var data;
 		$.ajax({
 			url : "detalhesMembros",
@@ -47,6 +54,7 @@ $(document).ready(function() {
 					width : 1200,
 					height : 600,
 					modal : true,
+					title: 'Detalhes do Membro',
 					buttons : {
 						"Fechar" : function() {
 							$(this).dialog("close");
@@ -61,7 +69,14 @@ $(document).ready(function() {
 		});
 	}
 	
-	function editaMembros(id) {
+	$(".edit").click(function() {
+		var campo = $(this);
+		var pai = $(this).parent();
+		var id = pai.find("td[class=ident]").text();
+		editaMembros(id);
+	});
+	
+	function editaMembros(id) {//funcao para chamar modal de edicao
 		var data;
 		$.ajax({
 			url : "detalhesMembros",
@@ -89,30 +104,23 @@ $(document).ready(function() {
 				}else{
 					$("#celulaEdit").val("Sim");
 				}
-				
-				$("#manutencao").dialog({
+				console.log(obj);
+				$("#edicao").dialog({
 					width : 1200,
 					height : 600,
 					modal : true,
+					title: 'Edicao de Membro',
 					buttons : {
+						"Salvar Mudancas": function(){
+							console.log("salvar mudancas");
+						},
 						"Fechar" : function() {
 							$(this).dialog("close");
 							
 						}
+						
 					}				
 				});
-				
-				/*$("#edicao").dialog({
-					width : 1200,
-					height : 600,
-					modal : true,
-					buttons : {
-						"Fechar" : function() {
-							$(this).dialog("close");
-							
-						}
-					}				
-				});*/
 				
 				$('.ui-dialog-titlebar-close').hide();
 
@@ -123,15 +131,14 @@ $(document).ready(function() {
 	
 	$(document).keyup(function(e) {
 		if (e.keyCode == 27) {
-			// alert('escape');.removeClass( "sub" );
-			$("#tabelaMembros tr:not(.sub)").show();
+			$("#tabelaMembros tr:not(.sub)").show();	
 			$("#tabelaMembros tr").removeClass("sub");
 			$("#completaNome").val("");
 
 		}
 	});
-	// quando apertar na lupa
-	$("#p_complete").click(function() {
+	
+	$("#p_complete").click(function() {// quando apertar na lupa
 		var nome = $("#completaNome").val();
 		$("#tabelaMembros td[id]").each(function() {
 			var nomes = $(this).text();
@@ -149,19 +156,8 @@ $(document).ready(function() {
 	$("#completaNome").autocomplete({
 		source : lista
 	});
-	// função chamar o dialog de
-	// editar cadastro de membro
-	$(".det").click(function() {
-		var campo = $(this);
-		var pai = $(this).parent();
-		var id = pai.find("td[class=ident]").text();
-		buscaDetalhesMembros(id);
-	});
-	$(".edit").click(function() {
-		var campo = $(this);
-		var pai = $(this).parent();
-		var id = pai.find("td[class=ident]").text();
-		editaMembros(id);
-	});
+	
+	
+	
 
 });

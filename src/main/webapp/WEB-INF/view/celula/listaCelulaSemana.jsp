@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Lista de usuarios</title>
+<title>Lista Celulas</title>
 <link rel="stylesheet" href="<c:url value="/recursos/css/main.css "/> ">
 <link rel="stylesheet"
 	href="<c:url value="/recursos/css/jquery-ui.css "/> ">
@@ -42,16 +42,14 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="logout"><span class="glyphicon glyphicon-user"></span>
-						Sign Up</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-						Login</a></li>
+						Sair</a></li>
 			</ul>
 		</div>
 	</nav>
 	<!-- Menu Vertical -->
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
+			<div class="col-sm-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li><a href="cadastroCelulas">Cadastro de Células</a></li>
 					<li><a href="cadastroCelulaSemana">Cadastrar a Célula da
@@ -60,10 +58,9 @@
 							Célula</a></li>
 					<li><a href="listaCelulas">Lista Células Existentes</a></li>
 					<li><a href="listCelulasSemana">Lista Células Semanais</a></li>
-					<li><a href="buscaSemanaData">Lista Detalhes Celula da Semana</a></li>
 				</ul>
 			</div>
-			<div class="col-sm-9 main">
+			<div class="col-sm-10 main">
 				<h2>Lista Células Semanais</h2>
 
 				<table class="table table-striped">
@@ -72,22 +69,30 @@
 						<th>Nome da célula</th>
 						<th>Semana</th>
 						<th>Data da Célula</th>
-						<th>Total Adultos</th>
 						<th>Total Crianças</th>
+						<th>Total Membros</th>
+						<th>Total Visitantes</th>
+						<th>Total Pessoas na Célula</th>
 						<th>Total Pessoas no Culto</th>
+						<th>Total Pessoas no Tadel</th>
+						<th>Total Pessoas no GE</th>
 						<th>Oferta</th>
 					</tr>
 					<c:forEach items="${celulas}" var="celula">
 						<tr>
 							<td>${celula.celula.nome_celula}</td>
 							<td>${celula.celulaSemana.semana}</td>
-							<td><a href="listPessoasPorCelulaSemana?data${celula.celulaSemana.data_celula}"><fmt:formatDate
+							<td><a href="#"><fmt:formatDate
 										value="${celula.celulaSemana.data_celula}"
 										pattern="dd/MM/yyyy" /></a></td>
-							<td>${celula.celulaSemana.tot_adultos}</td>
 							<td>${celula.celulaSemana.tot_criancas}</td>
+							<td>${celula.celulaSemana.tot_membros}</td>
+							<td>${celula.celulaSemana.tot_visitantes}</td>
+							<td>${celula.celulaSemana.tot_pessoas_celula}</td>
 							<td>${celula.celulaSemana.tot_pessoas_culto}</td>
-							<td>${celula.celulaSemana.oferta}</td>
+							<td>${celula.celulaSemana.tot_pessoas_tadel}</td>
+							<td>${celula.celulaSemana.tot_ge}</td>
+							<td><fmt:formatNumber value="${celula.celulaSemana.oferta}" minFractionDigits="2" type="currency" /></td>
 						</tr>
 					</c:forEach>
 				</table>

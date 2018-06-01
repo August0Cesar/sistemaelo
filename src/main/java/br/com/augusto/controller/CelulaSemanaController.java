@@ -1,5 +1,6 @@
 package br.com.augusto.controller;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.logging.impl.Log4JLogger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,7 @@ import br.com.augusto.dao.jpa.JPAPessoaCelula;
 import br.com.augusto.dao.jpa.JPAPessoasCelulas;
 import br.com.augusto.excell.MembrosExcell;
 import br.com.augusto.model.AuxCelulaSemana;
+import ch.qos.logback.classic.Logger;
 
 @Transactional
 @Controller
@@ -71,28 +74,30 @@ public class CelulaSemanaController {
 	}
 
 	@RequestMapping(value = "salvaCelulaSemana", method = RequestMethod.POST)
-	public String salvaCelulaSemana(Integer semana, String data_celula, int tot_pessoas, int tot_criancas,
-			int tot_visitantes, float ofertas, int tot_pessoas_culto, Integer id_celula) {
+	public String salvaCelulaSemana(Integer id_celula,int semana, String data_celula,int tot_membros,int tot_visitantes,
+			int tot_criancas,int tot_pessoas_celula,int tot_pessoas_culto,int tot_pessoas_tadel, int tot_pessoas_ge,BigDecimal ofertas) {
 		Celulas c = new Celulas();
-		c.setId_celula(id_celula);
 		CelulaSemana cs = new CelulaSemana();
+		PessoaCelula p = new PessoaCelula();
+		
+		c.setId_celula(id_celula);		
 		cs.setOferta(ofertas);
 		cs.setSemana(semana);
-		cs.setTot_adultos(tot_pessoas);
-		cs.setTot_criancas(tot_criancas);
-		cs.setTot_visitantes(tot_visitantes);
-		cs.setTot_pessoas_culto(tot_pessoas_culto);
 		cs.setCelula2(c);
-		PessoaCelula p = new PessoaCelula();
-
+		cs.setTot_criancas(tot_criancas);
+		cs.setTot_membros(tot_membros);
+		cs.setTot_visitantes(tot_visitantes);
+		cs.setTot_pessoas_celula(tot_pessoas_celula);
+		cs.setTot_pessoas_culto(tot_pessoas_culto);
+		cs.setTot_pessoas_tadel(tot_pessoas_tadel);
+		cs.setTot_ge(tot_pessoas_ge);
+		
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			Date data2 = formato.parse(data_celula);
-			System.out.println(data2);
 			cs.setData_celula(data2);
 			daoCelulaSemana.persistir(cs);
-		} catch (ParseException e) { // TODO
-			// Auto-generated
+		} catch (ParseException e) { 
 			e.printStackTrace();
 		}
 
@@ -104,7 +109,6 @@ public class CelulaSemanaController {
 	// cadastra pessoa ma celula
 	@RequestMapping(value = "salvaPessoaNaCelula", method = RequestMethod.POST)
 	public @ResponseBody String salvaPessoaNaCelula(@RequestBody String text) {
-		System.out.println(text);
 		Celulas c = new Celulas();
 		Pessoa p = new Pessoa();
 		PessoasCelulas pc = new PessoasCelulas();
@@ -119,11 +123,10 @@ public class CelulaSemanaController {
 
 		daoPessoasCelulas.persistir(pc);
 		String pessoa = p.getNome_pessoa();
-		System.out.println(pessoa);
 		return pessoa;
 	}
 
-	@RequestMapping(value = "salvaCelulaSemanaVisitante", method = RequestMethod.POST)
+	/*@RequestMapping(value = "salvaCelulaSemanaVisitante", method = RequestMethod.POST)
 	public @ResponseBody String salvaCelulaSemanaVisitante(@RequestBody String text) {
 		System.out.println(text);
 
@@ -170,10 +173,9 @@ public class CelulaSemanaController {
 		System.out.println(sucess);
 		return sucess;
 	}
-
+*/
 	@RequestMapping("/listCelulasSemana")
 	public String listCelulasSemana(Model model) {
-		System.out.println("passando no Controller ListaCelulas");
 		List<AuxCelulaSemana> lista = new ArrayList<AuxCelulaSemana>();
 		for (CelulaSemana cs : daoCelulaSemana.lista()) {
 			Celulas c = new Celulas();

@@ -1,5 +1,6 @@
 package br.com.augusto.controller.entidade;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,19 +19,34 @@ public class CelulaSemana {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(name = "semana", nullable = false)
+
 	private Integer semana;
 	@Column(name = "data_celula", nullable = false)
 	private Date data_celula;
+
+	@Column(name = "tot_membros", nullable = false)
+	private int tot_membros;
+
 	@Column(name = "tot_criancas", nullable = false)
 	private int tot_criancas;
+
 	@Column(name = "tot_visitantes", nullable = false)
 	private int tot_visitantes;
-	@Column(name = "tot_adultos", nullable = false)
-	private int tot_adultos;
-	@Column(name = "oferta", nullable = false)
-	private float oferta;
+
+	@Column(name = "tot_pessoas_celula", nullable = false)
+	private int tot_pessoas_celula;
+
+	@Column(name = "oferta", nullable = false, precision = 8, scale = 4)
+	private BigDecimal oferta;
+
 	@Column(name = "tot_pessoas_culto", nullable = false)
 	private int tot_pessoas_culto;
+
+	@Column(name = "tot_pessoas_tadel", nullable = false)
+	private int tot_pessoas_tadel;
+
+	@Column(name = "tot_ge", nullable = false)
+	private int tot_ge;
 
 	/*
 	 * @ManyToOne
@@ -43,30 +59,6 @@ public class CelulaSemana {
 
 	public CelulaSemana() {
 		super();
-	}
-
-	/*
-	 * public PessoaCelula getPessoaCelula() { return pessoaCelula; }
-	 * 
-	 * 
-	 * public void setPessoaCelula(PessoaCelula pessoaCelula) {
-	 * this.pessoaCelula = pessoaCelula; }
-	 */
-
-	public Celulas getCelula2() {
-		return celula2;
-	}
-
-	public void setCelula2(Celulas celula2) {
-		this.celula2 = celula2;
-	}
-
-	public int getTot_visitantes() {
-		return tot_visitantes;
-	}
-
-	public void setTot_visitantes(int tot_visitantes) {
-		this.tot_visitantes = tot_visitantes;
 	}
 
 	public Integer getId() {
@@ -93,6 +85,14 @@ public class CelulaSemana {
 		this.data_celula = data_celula;
 	}
 
+	public int getTot_membros() {
+		return tot_membros;
+	}
+
+	public void setTot_membros(int tot_membros) {
+		this.tot_membros = tot_membros;
+	}
+
 	public int getTot_criancas() {
 		return tot_criancas;
 	}
@@ -101,19 +101,27 @@ public class CelulaSemana {
 		this.tot_criancas = tot_criancas;
 	}
 
-	public int getTot_adultos() {
-		return tot_adultos;
+	public int getTot_visitantes() {
+		return tot_visitantes;
 	}
 
-	public void setTot_adultos(int tot_adultos) {
-		this.tot_adultos = tot_adultos;
+	public void setTot_visitantes(int tot_visitantes) {
+		this.tot_visitantes = tot_visitantes;
 	}
 
-	public float getOferta() {
+	public int getTot_pessoas_celula() {
+		return tot_pessoas_celula;
+	}
+
+	public void setTot_pessoas_celula(int tot_pessoas_celula) {
+		this.tot_pessoas_celula = tot_pessoas_celula;
+	}
+
+	public BigDecimal getOferta() {
 		return oferta;
 	}
 
-	public void setOferta(float oferta) {
+	public void setOferta(BigDecimal oferta) {
 		this.oferta = oferta;
 	}
 
@@ -124,5 +132,30 @@ public class CelulaSemana {
 	public void setTot_pessoas_culto(int tot_pessoas_culto) {
 		this.tot_pessoas_culto = tot_pessoas_culto;
 	}
+
+	public int getTot_pessoas_tadel() {
+		return tot_pessoas_tadel;
+	}
+
+	public void setTot_pessoas_tadel(int tot_pessoas_tadel) {
+		this.tot_pessoas_tadel = tot_pessoas_tadel;
+	}
+
+	public int getTot_ge() {
+		return tot_ge;
+	}
+
+	public void setTot_ge(int tot_ge) {
+		this.tot_ge = tot_ge;
+	}
+
+	public Celulas getCelula2() {
+		return celula2;
+	}
+
+	public void setCelula2(Celulas celula2) {
+		this.celula2 = celula2;
+	}
+
 
 }

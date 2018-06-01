@@ -14,7 +14,6 @@
 <link rel="stylesheet"
 	href="<c:url value="/recursos/css/jquery-ui.theme.css "/> ">
 <script src="<c:url value="/recursos/jquery/jquery-3.1.1.min.js" />"></script>
-<script src="<c:url value="/recursos/js/jquery.bootstrap.js" />"></script>
 <script src="<c:url value="/recursos/js/bootstrap.js" />"></script>
 <script src="<c:url value="/recursos/js/jquery.tabletojson.js" />"></script>
 <script src="<c:url value="/recursos/jquery/jquery-ui.js" />"></script>
@@ -41,9 +40,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="logout"><span class="glyphicon glyphicon-user"></span>
-						Sign Up</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-						Login</a></li>
+						Sair</a></li>
 			</ul>
 		</div>
 	</nav>

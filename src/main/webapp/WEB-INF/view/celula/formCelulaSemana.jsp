@@ -19,8 +19,9 @@
 <script src="<c:url value="/recursos/jquery/index.js" />"></script>
 </head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cadastro de Culto</title>
+<title>Cadastro de Celula da Semana</title>
 <link rel="stylesheet" href="<c:url value="/recursos/css/main.css "/> ">
+<script src="<c:url value="/recursos/jquery/celulaSemana.js" />"></script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -39,9 +40,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="logout"><span class="glyphicon glyphicon-user"></span>
-						Sign Up</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-						Login</a></li>
+						Sair</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -60,9 +59,25 @@
 				</ul>
 			</div>
 			<div class="col-sm-9 main">
-				<form class="well form-horizontal" action="salvaCelulaSemana" method = "post">
+				<form class="well form-horizontal" action="salvaCelulaSemana" method = "post" id="formSemanaCelula">
 					<fieldset>
 						<legend>Cadastro Célula da Semana</legend>
+						<!-- CELULAS -->
+						<div class="form-group">
+							<label class="col-md-4 control-label">Célula</label>
+							<div class="col-md-4 selectContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i
+										class="glyphicon glyphicon-list"></i></span> <select id="id_celula"
+										name="id_celula" class="form-control selectpicker">
+										<option value="">Selecione a Célula</option>
+										<c:forEach items="${celulas}" var="celula">
+											<option id="celula" value="${celula.id_celula}">${celula.nome_celula}</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-md-4 control-label">Semana</label>
 							<div class="col-md-4 inputGroupContainer">
@@ -86,14 +101,20 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label">Total de Adultos</label>
+							<label class="col-md-4 control-label">Total de Membros</label>
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
-									<span class="input-group-addon"><i
-										class="glyphicon glyphicon-user"></i></span> <input
-										name="tot_pessoas" id="tot_pessoas"
-										placeholder="Digite número de pessoas" class="form-control"
-										type="text">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+										<input name="tot_membros" id="tot_membros" placeholder="Digite total de membros" class="form-control" type="text">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label">Total de Visitantes</label>
+							<div class="col-md-4 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+									<input name="tot_visitantes" id="tot_visitantes" placeholder="Digite total de visitantes" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
@@ -101,69 +122,58 @@
 							<label class="col-md-4 control-label">Total de Crianças</label>
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
-									<span class="input-group-addon"><i
-										class="glyphicon glyphicon-user"></i></span> <input
-										name="tot_criancas" id="tot_criancas"
-										placeholder="Digite número de crianças" class="form-control"
-										type="text">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+									<input name="tot_criancas" id="tot_criancas" placeholder="Digite número de crianças" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label">Total de
-								Visistantes</label>
+							<label class="col-md-4 control-label">Total de Pessoas na Célula</label>
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
-									<span class="input-group-addon"><i
-										class="glyphicon glyphicon-user"></i></span> <input
-										name="tot_visitantes" id="tot_visitantes"
-										placeholder="Digite total de visitantes" class="form-control"
-										type="text">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+									<input name="tot_pessoas_celula" id="tot_pessoas_celula" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label">Total de Oferta da
-								Célula</label>
+							<label class="col-md-4 control-label">Total de Pessoas no Culto</label>
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
-									<span class="input-group-addon"><i
-										class="glyphicon glyphicon-usd"></i></span> <input name="ofertas"
-										id="ofertas" placeholder="Digite total de oferta 00.00"
-										class="form-control" type="text">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+									<input name="tot_pessoas_culto" id="tot_pessoas_culto" placeholder="Digite total de pessoas no culto" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-4 control-label">Total de Pessoas no
-								Culto</label>
+							<label class="col-md-4 control-label">Total de Pessoas no Tadel</label>
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
-									<span class="input-group-addon"><i
-										class="glyphicon glyphicon-user"></i></span> <input name="tot_pessoas_culto"
-										id="tot_pessoas_culto"
-										placeholder="Digite total de pessoas no culto"
-										class="form-control" type="text">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+									<input name="tot_pessoas_tadel" id="tot_pessoas_tadel" placeholder="Digite total de pessoas no Tadel" class="form-control" type="text">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label">Total de Pessoas no GE</label>
+							<div class="col-md-4 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
+									<input name="tot_pessoas_ge" id="tot_pessoas_ge" placeholder="Digite total de pessoas no GE" class="form-control" type="text">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-4 control-label">Total de Oferta da Célula</label>
+							<div class="col-md-4 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span> 
+									<input name="ofertas" id="ofertas" placeholder="Digite total de oferta 00.00" class="form-control" type="text">
 								</div>
 							</div>
 						</div>
 
-						<!-- CELULAS -->
-						<div class="form-group">
-							<label class="col-md-4 control-label">Célula</label>
-							<div class="col-md-4 selectContainer">
-								<div class="input-group">
-									<span class="input-group-addon"><i
-										class="glyphicon glyphicon-list"></i></span> <select id="id_celula"
-										name="id_celula" class="form-control selectpicker">
-										<option value="">Selecione a Célula</option>
-										<c:forEach items="${celulas}" var="celula">
-											<option id="celula" value="${celula.id_celula}">${celula.nome_celula}</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-						</div>
+						
 						<!-- Button -->
 						<div class="form-group">
 							<label class="col-md-4 control-label"></label>

@@ -13,8 +13,7 @@ public class HomeController {
 
 	@RequestMapping("/home")
 	public String home() {
-		System.out.println("Logado com Sucesso");
-		return "home/memb_visit";
+		return "pessoa/formMembro";
 	}
 
 	@RequestMapping("/culto")
@@ -31,7 +30,7 @@ public class HomeController {
 
 	@RequestMapping("/membrosVisitantes")
 	public String membrosVisitantes() {
-		return "home/memb_visit";
+		return "pessoa/formMembro";
 	}
 
 	@RequestMapping("/celula")

@@ -23,7 +23,7 @@
 		</properties> -->
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
- 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sistemaelo" />
+ 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sistemaelo?useSSL=false" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="46591234" /> 
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />

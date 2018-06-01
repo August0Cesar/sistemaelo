@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Lista de usuarios</title>
+<title>Lista de Membros</title>
 <link rel="stylesheet" href="<c:url value="/recursos/css/main.css "/> ">
 <link rel="stylesheet"
 	href="<c:url value="/recursos/css/jquery-ui.css "/> ">
@@ -22,13 +22,12 @@
 <script src="<c:url value="/recursos/jquery/pesquisa.js" />"></script>
 </head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cadastro de Culto</title>
+<title>lista de Membros</title>
 <link rel="stylesheet" href="<c:url value="/recursos/css/main.css "/> ">
 </head>
 <body>
 	<!-- onLoad="myFunction()" -->
-	<div id="pp" 
-		style="display: none; width: 600px; height: 100%;">
+	<div id="pp" style="display: none; width: 600px; height: 100%;">
 		<div class="row">
 			<div class="col-sm-4 image-perfil text-center">
 				<img alt="imagem_perfil"
@@ -96,9 +95,9 @@
 		</div>
 	</div>
 	<div id="manutencao" style="display: none; width: 100%; height: 100%;">
-	<!-- <iframe src="cadastroMembro" height="600" width="1200"></iframe> -->
-	<h3 style="text-align: center">Em manutenção!</h3>
-	<h3 style="text-align: center">Em breve!</h3>
+		<!-- <iframe src="cadastroMembro" height="600" width="1200"></iframe> -->
+		<h3 style="text-align: center">Em manutenção!</h3>
+		<h3 style="text-align: center">Em breve!</h3>
 	</div>
 	<div id="edicao" class="principal"
 		style="display: none; width: 600px; height: 100%;">
@@ -121,9 +120,10 @@
 						<label>Tel.Whats:</label><br> <label>Tel.Residencia:</label>
 					</div>
 					<div class="col-xs-8 text-left">
-						<input type="text" id="dt_nasEdit" /> <input type="text"
-							id="enderecoEdit" /> <input type="text" id="tel_whatsEdit" /> <input
-							type="text" id="tel_residEdit" /> <br>
+						<input type="text" id="dt_nasEdit" /> <br>
+						<input type="text"	id="enderecoEdit" /> <br>
+						<input type="text" id="tel_whatsEdit" /> <br>
+						<input type="text" id="tel_residEdit" /> <br>
 					</div>
 				</div>
 				<hr>
@@ -134,8 +134,9 @@
 						<label>Nome Conjugue:</label>
 					</div>
 					<div class="col-xs-8 text-left">
-						<input type="text" id="paiEdit" /> <input type="text" id="maeEdit" /> <input
-							type="text" id="conjugueEdit" /> <br>
+						<input type="text" id="paiEdit" /><br> 
+						<input type="text" id="maeEdit" /><br> 
+						<input type="text" id="conjugueEdit" /> <br>
 					</div>
 				</div>
 				<hr>
@@ -145,7 +146,8 @@
 						<label>Nome Cargo:</label> <label>Chegada a Igreja:</label>
 					</div>
 					<div class="col-xs-8 text-left">
-						<input type="text" id="cargoEdit" /> <input type="text" id="chegadaEdit" />
+						<input type="text" id="cargoEdit" /> <br>
+						<input type="text" id="chegadaEdit" />
 					</div>
 				</div>
 
@@ -157,7 +159,8 @@
 							alguma Célula:</label>
 					</div>
 					<div class="col-xs-8 text-left">
-						<input type="text" id="bPorEdit" /> <input type="text" id="celulaEdit" />
+						<input type="text" id="bPorEdit" /> <br>
+						<input type="text" id="celulaEdit" />
 					</div>
 				</div>
 			</div>
@@ -180,9 +183,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="logout"><span class="glyphicon glyphicon-user"></span>
-						Sign Up</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-						Login</a></li>
+						Sair</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -208,9 +209,15 @@
 			</div>
 
 			<div class="col-sm-12 main">
-				<h2>Todos os Membros</h2><br><form action="membroExcell">
-				<button ><img alt="export para excell" style="width:56px;heigth:56px;" src="<c:url value="/recursos/imagens/excell.png" />"></button></form>
-				
+				<h2>Todos os Membros</h2>
+				<br>
+				<form action="membroExcell">
+					<button>
+						<img alt="export para excell" style="width: 56px; heigth: 56px;"
+							src="<c:url value="/recursos/imagens/excell.png" />">
+					</button>
+				</form>
+
 				<div class="input-group">
 					<span class="input-group-addon" id="p_complete"><i
 						class="glyphicon glyphicon-search"></i></span> <input name="nome_pessoa"
@@ -255,8 +262,12 @@
 									<c:otherwise> SIM
 									</c:otherwise>
 								</c:choose></td>
-							<td class="det"><button><i class="glyphicon glyphicon-list"></i></button></td>
-							<td class="edit"><button><i class="glyphicon glyphicon-edit"></i></button></td>
+							<td class="det"><button>
+									<i class="glyphicon glyphicon-list"></i>
+								</button></td>
+							<td class="edit"><button>
+									<i class="glyphicon glyphicon-edit"></i>
+								</button></td>
 							<td><a href="removePessoa?id=${pessoa.id_pessoa}"><i
 									class="glyphicon glyphicon-remove"></i></a></td>
 						</tr>

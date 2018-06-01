@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Cadastro de Membros</title>
 <link rel="stylesheet" href="<c:url value="recursos/css/main.css "/> "> 
 <link rel="stylesheet" href="<c:url value="/recursos/css/jquery-ui.css "/> ">
 <link rel="stylesheet" href="<c:url value="/recursos/css/jquery-ui.theme.css "/> ">
@@ -36,9 +36,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="logout"><span class="glyphicon glyphicon-user"></span>
-						Sign Up</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-						Login</a></li>
+						Sair</a></li>
 			</ul>
 		</div>
 	</nav>
