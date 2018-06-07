@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Lista de usuarios</title>
+<title>Trilho liderança</title>
 <link rel="stylesheet" href="<c:url value="/recursos/css/main.css "/> ">
 <link rel="stylesheet"
 	href="<c:url value="/recursos/css/jquery-ui.css "/> ">
@@ -19,10 +19,13 @@
 <script src="<c:url value="/recursos/jquery/jquery-ui.js" />"></script>
 <script src="<c:url value="/recursos/jquery/trilho.js" />"></script>
 <script src="<c:url value="/recursos/js/jquery.tabletojson.min.js" />"></script>
-</head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cadastro de Culto</title>
-<link rel="stylesheet" href="<c:url value="/recursos/css/main.css "/> ">
+
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- <script type="text/javascript">
+	
+	
+</script> -->
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -41,9 +44,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="logout"><span class="glyphicon glyphicon-user"></span>
-						Sign Up</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-						Login</a></li>
+						Sair</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -53,7 +54,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li><a href="statusPorPessoa">Status Pessoa no Trilho</a></li>
-					
+
 				</ul>
 			</div>
 			<div class="col-sm-9 main">
@@ -78,17 +79,27 @@
 							<button class="btn" id="btn_busca">Buscar Membro</button>
 							<button class="btn" id="btn_novaBusca">Nova Busca</button>
 						</div>
-						<hr>
-						<h3 id="nome_pessoa">Selecione Membro Pessoa</h3>
-						<!-- Tabela do trilho -->
-						<table class="table table-striped" id="tabela_trilho">
-							<tr>
-								<th>ID</th>
-								<th>NOME TRILHO</th>
-								<th>STATUS</th>
-							</tr>
-						</table>
+						<div class="row">
+							<div class="col-sm-6 main">
+								<h3 id="nome_pessoa">Membro</h3>
+								<!-- Tabela do trilho -->
+								<table class="table table-striped" id="tabela_trilho">
+									<tr>
+										<th>ID</th>
+										<th>NOME TRILHO</th>	
+										<th>STATUS</th>
+									</tr>
+								</table>
 
+
+							</div>
+							<div id="grafico" class="col-sm-6 main">
+								<h3 style="text-align: left">Status no Trilho</h3>
+								<div id="chart_div" style="background-color: #FFFAFA">
+								</div>
+							</div>
+						</div>
+						<hr>
 						<!-- Button -->
 						<div class="form-group">
 							<label class="col-md-4 control-label"></label>
@@ -104,4 +115,6 @@
 		</div>
 	</div>
 </body>
+
+
 </html>

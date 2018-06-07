@@ -25,6 +25,7 @@ import br.com.augusto.controller.entidade.TrilhoLideranca;
 import br.com.augusto.dao.jpa.JPAListTrilho;
 import br.com.augusto.dao.jpa.JPAPessoa;
 import br.com.augusto.dao.jpa.JPATrilhoLideranca;
+import br.com.augusto.dto.TotaisTrilhoLiderancaDto;
 import br.com.augusto.model.AuxListTrilho;
 
 @Transactional
@@ -126,7 +127,6 @@ public class ListTrilhoController {
 		Pessoa pessoa = new Pessoa();
 		pessoa.setId_pessoa(id);
 		pessoa = daoPessoa.get(id);
-		System.out.println(pessoa.getListTrilho().size());
 		JSONArray b = new JSONArray();
 		for (int i = 0; i < pessoa.getListTrilho().size(); i++) {
 			JSONObject obj = new JSONObject();
@@ -138,8 +138,25 @@ public class ListTrilhoController {
 
 		return b.toString();
 	}
+	@RequestMapping(value = "/buscaTotaisTrilho", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public @ResponseBody TotaisTrilhoLiderancaDto buscaTotaisTrilho(@RequestBody Integer id) {
+		TotaisTrilhoLiderancaDto total = new TotaisTrilhoLiderancaDto(); 
+		Integer completos = 0;
+		int naoCompletos = 0;
+		
+		try {
+			completos = daoListTrilho.buscaTotaisPorPessoa(id,true);
+			naoCompletos = daoListTrilho.buscaTotaisPorPessoa(id,false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		total.setCompletos(completos);
+		total.setNaoCompletos(naoCompletos);
+		return total;
+	}
 
-	// Metodo que atualiza o Trilho de Liderança
+	// Metodo que atualiza o Trilho de Liderança 
 	@RequestMapping(value = "/updateTrilho", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody String updateTrilho(@RequestBody String string) {

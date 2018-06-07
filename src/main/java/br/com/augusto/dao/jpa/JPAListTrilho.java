@@ -32,4 +32,12 @@ public class JPAListTrilho extends JPADAO<ListTrilho> implements DAOListTrilho {
 		query.setParameter("id", id);
 		return query.getResultList();
 	}
+
+	public Integer buscaTotaisPorPessoa(Integer id,boolean statusTrilho) {
+		String consulta = "select count(b.id) as quantidade from ListTrilho b where b.pessoa3.id = :id and b.status = :statusTrilho";
+		Query query = manager.createQuery(consulta);
+		query.setParameter("id", id);
+		query.setParameter("statusTrilho", statusTrilho);
+		return new Integer(query.getSingleResult().toString());
+	}
 }

@@ -44,7 +44,6 @@ public class JPAPessoa extends JPADAO<Pessoa> implements DAOPessoa {
 	}
 
 	public List<Pessoa> visitantesPorPeriodo(String dataInicio, String dataFinal) {
-		System.out.println(dataInicio + dataFinal);
 		try {
 
 			// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
