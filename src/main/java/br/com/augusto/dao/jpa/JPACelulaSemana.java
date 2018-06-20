@@ -22,7 +22,8 @@ import br.com.augusto.dao.DAOPessoa;
 
 @Repository("daoCelulaSemana")
 public class JPACelulaSemana extends JPADAO<CelulaSemana> implements DAOCelulaSemana {
-
+	
+	@SuppressWarnings("unchecked")
 	public List<CelulaSemana> list() {
 		return manager.createQuery("select c from CelulaSemana c").getResultList();
 	}
@@ -31,24 +32,29 @@ public class JPACelulaSemana extends JPADAO<CelulaSemana> implements DAOCelulaSe
 		return manager.find(CelulaSemana.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CelulaSemana> lista() {
 		return manager.createQuery("select c from CelulaSemana c").getResultList();
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public List<CelulaSemana> listaPorCelula(Integer id_celula) {
+		Query query = manager.createQuery("select c from CelulaSemana c where c.celula2.id_celula = :idCelula");
+		query.setParameter("idCelula", id_celula);
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Object[]> trazMembrosDaCelula(String data) {
-		System.out.println(data);
 		try {
 			SimpleDateFormat formato2 = new SimpleDateFormat("dd/MM/yyyy");
 			Date dt = new Date();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(formato2.parse(data));
-			System.out.println(cal.getTime());
-			System.out.println("entrando na consulta");
 			String consulta = "select p.nome_pessoa,p.membro,b.id from CelulaSemana b INNER JOIN b.pessoaCelula p where b.data_celula = :data";
 			Query query = manager.createQuery(consulta);
 			query.setParameter("data", cal.getTime());
-
-			System.out.println("sai da consulta");
+			
 			return query.getResultList();
 		} catch (
 

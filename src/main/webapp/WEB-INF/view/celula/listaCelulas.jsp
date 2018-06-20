@@ -72,8 +72,8 @@
 						<th>Anfitrião</th>
 						<th>Endereco</th>
 						<th>Lider</th>
-
-
+						<th>Editar</th>
+						<th>Remover</th>
 					</tr>
 					<c:forEach items="${celulas}" var="celula">
 						<tr>
@@ -82,6 +82,8 @@
 							<td>${celula.endereco_celula}</td>
 							<%-- <td><c:if test="${celula.celula_kids eq true} ">NAO KIDS</c:if></td> --%>
 							<td>${celula.pessoa.nome_pessoa}</td>
+							<td><a href="editCelulas?id=${celula.id_celula}"><i class="glyphicon glyphicon-edit"></i></a></td>
+							<td><a href="removeCelulas?id=${celula.id_celula}"><i class="glyphicon glyphicon-remove"></i></a></td>
 
 
 						</tr>

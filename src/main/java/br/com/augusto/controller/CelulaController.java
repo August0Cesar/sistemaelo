@@ -7,12 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.augusto.controller.entidade.CelulaSemana;
 import br.com.augusto.controller.entidade.Celulas;
 import br.com.augusto.controller.entidade.Pessoa;
 import br.com.augusto.controller.entidade.Usuario;
+import br.com.augusto.dao.DAOCelulaSemana;
+import br.com.augusto.dao.jpa.JPACelulaSemana;
 import br.com.augusto.dao.jpa.JPACelulas;
 import br.com.augusto.dao.jpa.JPAPessoa;
 import br.com.augusto.dao.jpa.JPAUsuario;
@@ -28,6 +37,8 @@ public class CelulaController {
 	JPACelulas daoCelulas;
 	@Autowired
 	JPAPessoa daoPessoa;
+	@Autowired
+	JPACelulaSemana daoCelulaSemana;
 
 	@RequestMapping("/cadastroCelulas")
 	public String homepage(Model model) {
@@ -49,15 +60,12 @@ public class CelulaController {
 		pessoa = daoPessoa.get(id_pessoa);
 		celula.setPessoa(pessoa);
 
-		// System.out.println(nome_celula + id_pessoa);
-		System.out.println("salvando no banco");
 		daoCelulas.persistir(celula);
 		return "redirect:cadastroCelulas";
 	}
 
 	@RequestMapping("/listaCelulas")
 	public String listaCelulas(Model model) {
-		System.out.println("passando no Controller ListaCelulas");
 		celulas = daoCelulas.listCompleta();
 		model.addAttribute("celulas", celulas);
 		return "celula/listaCelulas";
@@ -69,19 +77,44 @@ public class CelulaController {
 		return "celula/listaCelulas";
 	}
 
-	@RequestMapping("/alteraCelulas")
-	public String alteraUsuario() {
-		// model.addAttribute("tarefa", dao.buscaPorId(id));
-		return "celulas/listaCelulas";
+	@RequestMapping(value="/editCelulas",method=RequestMethod.GET)
+	public ModelAndView editCelulas(Integer id) {
+		ModelAndView model = new ModelAndView();
+		Celulas celula = daoCelulas.get(id);
+		model.addObject("celula", celula);
+		model.addObject("pessoas", daoPessoa.list());
+		model.setViewName("celula/formEditCelulas");
+		return model;
 	}
+	
+	@RequestMapping(value="/salvaEdicaoCelulas",method=RequestMethod.POST)
+	public String salvaEdicaoCelulas(@RequestParam Integer id_celula,@RequestParam String nome_celula, @RequestParam String nome_anfitriao,
+			@RequestParam String endereco_celula, @RequestParam boolean celula_kids, @RequestParam Integer id_pessoa) {
+		
+		Celulas celulaAtual = daoCelulas.get(id_celula);
+		Pessoa pessoa = daoPessoa.get(id_pessoa);
+		celulaAtual.setEndereco_celula(endereco_celula);
+		celulaAtual.setNome_celula(nome_celula);
+		celulaAtual.setKids(celula_kids);
+		celulaAtual.setNome_anfitriao(nome_anfitriao);
+		celulaAtual.setPessoa(pessoa);
+		
+		daoCelulas.altera(celulaAtual);
+		return "redirect:listaCelulas";
+	}
+	
 
 	@RequestMapping("/removeCelulas")
-	public String removeCelulas(int id) {
-		System.out.print("passei aqui /n");
+	public String removeCelulas(int id) throws Exception { 
 		Celulas celula = daoCelulas.get(id);
-		// System.out.print(celula.getId_usuario() + usuario.getNome_usuario());
+		
+		List<CelulaSemana> celulas = daoCelulaSemana.listaPorCelula(id);
+		if(celulas.size()>0)
+			return "error/celulaError";
+		
+		celula.setPessoa(null);
 		daoCelulas.excluir(celula);
-		return "redirect:listaUsuarios";
+		return "redirect:listaCelulas";
 
 	}
 }
